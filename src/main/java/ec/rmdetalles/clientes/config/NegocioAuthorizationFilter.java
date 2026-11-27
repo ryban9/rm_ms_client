@@ -105,6 +105,13 @@ public class NegocioAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.equals("/v3/api-docs") || path.startsWith("/v3/api-docs/")
+                || path.equals("/v3/api-docs.yaml");
+    }
+
     private void responderError(HttpServletResponse response, int status, String mensaje)
             throws IOException {
         response.setStatus(status);
